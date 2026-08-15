@@ -1,0 +1,12 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#0b1220"/>
+  <rect x="60" y="60" width="1080" height="555" rx="24" fill="#121a2b" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="110" cy="110" r="10" fill="#ef4444"/>
+  <circle cx="145" cy="110" r="10" fill="#eab308"/>
+  <circle cx="180" cy="110" r="10" fill="#22c55e"/>
+  <text x="120" y="180" fill="#f59e0b" font-family="Segoe UI, sans-serif" font-size="40" font-weight="600">Store Management System</text>
+  <rect x="120" y="210" width="960" height="24" rx="8" fill="#f59e0b" fill-opacity="0.35"/>
+  <rect x="120" y="260" width="720" height="16" rx="6" fill="#334155"/>
+  <rect x="120" y="296" width="640" height="16" rx="6" fill="#334155"/>
+  <text x="120" y="420" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="22">React · Node.js · PostgreSQL · RBAC</text>
+</svg>
