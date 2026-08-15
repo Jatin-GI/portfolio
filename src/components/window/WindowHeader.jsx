@@ -60,7 +60,7 @@ export default function WindowHeader({
             isActive ? "text-white/90" : "text-white/55"
           )}
         >
-          {/* {title} */}
+          {title}
         </span>
       </div>
     </div>

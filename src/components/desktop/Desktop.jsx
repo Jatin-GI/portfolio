@@ -13,6 +13,7 @@ import WindowManager from "@/components/window/WindowManager";
 import BootScreen from "@/components/boot/BootScreen";
 import NotificationCenter from "@/components/desktop/NotificationCenter";
 import Spotlight from "@/components/desktop/Spotlight";
+import IPhoneHome from "@/components/mobile/IPhoneHome";
 import { useWindowStore } from "@/store/windowStore";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
@@ -58,6 +59,9 @@ export default function Desktop() {
   const bootSession = useWindowStore((s) => s.bootSession);
   const desktopReady = useWindowStore((s) => s.desktopReady);
   const finishBoot = useWindowStore((s) => s.finishBoot);
+  const windows = useWindowStore((s) => s.windows);
+
+  const hasOpenApp = Object.values(windows).some((w) => w.isOpen && !w.isMinimized);
 
   const handleBootComplete = useCallback(() => {
     finishBoot();
@@ -77,11 +81,15 @@ export default function Desktop() {
 
   const handleContextMenu = useCallback(
     (e) => {
+      if (isMobile) {
+        e.preventDefault();
+        return;
+      }
       e.preventDefault();
       closePanels();
       setContextMenu({ x: e.clientX, y: e.clientY });
     },
-    [setContextMenu, closePanels]
+    [setContextMenu, closePanels, isMobile]
   );
 
   return (
@@ -94,17 +102,23 @@ export default function Desktop() {
       />
 
       <div
-        className="desktop-root relative h-[100dvh] w-full overflow-hidden text-zinc-100"
+        className={cn(
+          "desktop-root relative h-[100dvh] w-full overflow-hidden text-zinc-100",
+          isMobile && "iphone-root"
+        )}
         onClick={handleDesktopClick}
         onContextMenu={handleContextMenu}
         role="application"
-        aria-label={`${profile.name}'s desktop`}
+        aria-label={
+          isMobile ? `${profile.name}'s iPhone` : `${profile.name}'s desktop`
+        }
       >
         <div
           key={refreshKey}
           className={cn(
             "absolute inset-0",
-            wallpaperVariant === "aurora" ? "wallpaper-aurora" : "wallpaper-default"
+            wallpaperVariant === "aurora" ? "wallpaper-aurora" : "wallpaper-default",
+            isMobile && "iphone-wallpaper"
           )}
           style={{ filter: `brightness(${Math.max(0.45, brightness / 100)})` }}
         />
@@ -116,50 +130,57 @@ export default function Desktop() {
             animate={{ opacity: 1 }}
             className="relative z-10 h-full w-full"
           >
-            <MenuBar />
-            <CalendarPanel />
-            <ControlCenter />
-            <Spotlight />
-            <NotificationCenter />
+            {isMobile ? (
+              <>
+                <IPhoneHome hideSpringboard={hasOpenApp} />
+                <div className="pointer-events-none absolute inset-0 z-40">
+                  <WindowManager />
+                </div>
+                <NotificationCenter />
+              </>
+            ) : (
+              <>
+                <MenuBar />
+                <CalendarPanel />
+                <ControlCenter />
+                <Spotlight />
+                <NotificationCenter />
 
-            <nav
-              aria-label="Desktop icons"
-              className={cn(
-                "pointer-events-auto absolute z-20",
-                "left-3 top-10 flex max-h-[calc(100dvh-120px)] flex-col flex-wrap content-start gap-y-1",
-                "max-md:left-1 max-md:right-1 max-md:top-10 max-md:max-h-none",
-                "max-md:grid max-md:grid-cols-4 max-md:justify-items-center max-md:gap-2 max-md:px-1"
-              )}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {ICONS.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.03 * index, duration: 0.2 }}
+                <nav
+                  aria-label="Desktop icons"
+                  className="pointer-events-auto absolute left-3 top-10 z-20 flex max-h-[calc(100dvh-120px)] flex-col flex-wrap content-start gap-y-1"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <DesktopIcon
-                    id={item.id}
-                    icon={item.icon}
-                    label={item.label}
-                    selected={selectedIconId === item.id}
-                    onSelect={setSelectedIconId}
-                    onOpen={(id) => openWindow(id)}
-                  />
-                </motion.div>
-              ))}
-            </nav>
+                  {ICONS.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.03 * index, duration: 0.2 }}
+                    >
+                      <DesktopIcon
+                        id={item.id}
+                        icon={item.icon}
+                        label={item.label}
+                        selected={selectedIconId === item.id}
+                        onSelect={setSelectedIconId}
+                        onOpen={(id) => openWindow(id)}
+                      />
+                    </motion.div>
+                  ))}
+                </nav>
 
-            <div className="pointer-events-none absolute inset-x-0 top-7 bottom-[88px] z-30">
-              <div className="pointer-events-none relative h-full w-full overflow-hidden">
-                <WindowManager />
-              </div>
-            </div>
+                <div className="pointer-events-none absolute inset-x-0 top-7 bottom-[88px] z-30">
+                  <div className="pointer-events-none relative h-full w-full overflow-hidden">
+                    <WindowManager />
+                  </div>
+                </div>
 
-            <Launchpad />
-            <ContextMenu />
-            <Dock />
+                <Launchpad />
+                <ContextMenu />
+                <Dock />
+              </>
+            )}
           </motion.div>
         ) : null}
       </div>

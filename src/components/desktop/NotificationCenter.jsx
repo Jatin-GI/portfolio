@@ -25,7 +25,7 @@ export default function NotificationCenter() {
   }, [notifications, dismissNotification]);
 
   return (
-    <div className="pointer-events-none absolute right-3 top-10 z-[12000] flex w-[min(320px,calc(100vw-1.5rem))] flex-col gap-2">
+    <div className="pointer-events-none absolute right-3 top-12 z-[12000] flex w-[min(320px,calc(100vw-1.5rem))] flex-col gap-2 md:top-10">
       <AnimatePresence>
         {notifications.map((n) => {
           const Icon = ICONS[n.type] || Info;

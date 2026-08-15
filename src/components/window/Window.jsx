@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { Rnd } from "react-rnd";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import WindowHeader from "@/components/window/WindowHeader";
+import IPhoneAppHeader from "@/components/mobile/IPhoneAppHeader";
 import { useWindowStore, MENU_BAR_HEIGHT, DOCK_CLEARANCE } from "@/store/windowStore";
 import { cn } from "@/lib/utils";
 
@@ -33,11 +34,58 @@ export default function Window({
   const isActive = activeWindowId === id;
   const disableDragResize = isMobile || win.isMaximized;
 
+  if (win.isMinimized) return null;
+
+  // —— iPhone fullscreen app ——
+  if (isMobile) {
+    return (
+      <AnimatePresence>
+        <motion.div
+          key={id}
+          initial={reduceMotion ? false : { y: "100%", opacity: 0.85 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={reduceMotion ? undefined : { y: "40%", opacity: 0 }}
+          transition={{ type: "spring", stiffness: 380, damping: 36 }}
+          style={{ zIndex: win.zIndex }}
+          className="pointer-events-auto fixed inset-0"
+          onMouseDown={() => focusWindow(id)}
+        >
+          <div
+            className="iphone-app flex h-full w-full flex-col bg-[#000]"
+            role="dialog"
+            aria-label={title || win.title}
+            aria-modal="true"
+          >
+            {/* Status bar spacer */}
+            <div className="h-11 shrink-0 bg-[#1c1c1e]" />
+            <IPhoneAppHeader
+              title={title || win.title}
+              icon={icon}
+              onClose={() => closeWindow(id)}
+            />
+            <div className="mac-window-body mac-scroll min-h-0 flex-1 overflow-auto bg-[#1c1c1e] text-zinc-200 pb-8">
+              {children}
+            </div>
+            {/* Home indicator — tap to go home */}
+            <button
+              type="button"
+              aria-label="Go to Home Screen"
+              className="absolute inset-x-0 bottom-0 z-20 flex h-8 items-end justify-center pb-2"
+              onClick={() => closeWindow(id)}
+            >
+              <span className="iphone-home-indicator h-1 w-[134px] rounded-full bg-white/85" />
+            </button>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    );
+  }
+
   const content = (
     <div
       className={cn(
         "mac-window flex h-full w-full flex-col overflow-hidden",
-        win.isMaximized || isMobile ? "rounded-none" : "rounded-xl",
+        win.isMaximized ? "rounded-none" : "rounded-xl",
         isActive ? "is-active" : "is-inactive"
       )}
       onMouseDown={() => focusWindow(id)}
@@ -51,9 +99,7 @@ export default function Window({
         isMaximized={win.isMaximized}
         isActive={isActive}
         onMinimize={() => minimizeWindow(id)}
-        onMaximize={() => {
-          if (!isMobile) maximizeWindow(id);
-        }}
+        onMaximize={() => maximizeWindow(id)}
         onClose={() => closeWindow(id)}
         onPointerDown={() => focusWindow(id)}
       />
@@ -63,27 +109,24 @@ export default function Window({
     </div>
   );
 
-  if (win.isMinimized) return null;
-
   if (disableDragResize) {
-    const style =
-      win.isMaximized || isMobile
-        ? {
-            position: "fixed",
-            left: 0,
-            top: MENU_BAR_HEIGHT,
-            width: "100vw",
-            height: `calc(100dvh - ${MENU_BAR_HEIGHT + DOCK_CLEARANCE}px)`,
-            zIndex: win.zIndex,
-          }
-        : {
-            position: "absolute",
-            left: win.x,
-            top: win.y,
-            width: win.width,
-            height: win.height,
-            zIndex: win.zIndex,
-          };
+    const style = win.isMaximized
+      ? {
+          position: "fixed",
+          left: 0,
+          top: MENU_BAR_HEIGHT,
+          width: "100vw",
+          height: `calc(100dvh - ${MENU_BAR_HEIGHT + DOCK_CLEARANCE}px)`,
+          zIndex: win.zIndex,
+        }
+      : {
+          position: "absolute",
+          left: win.x,
+          top: win.y,
+          width: win.width,
+          height: win.height,
+          zIndex: win.zIndex,
+        };
 
     return (
       <AnimatePresence>
