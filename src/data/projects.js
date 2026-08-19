@@ -1,5 +1,37 @@
 const projects = [
   {
+    id: "attendance-management-system",
+    name: "Attendance Management System",
+    description:
+      "Full-stack, role-based attendance management platform for administrators, teachers, and students with JWT auth and permission-based authorization.",
+    problem:
+      "Educational institutions need a centralized system where admins, teachers, and students can manage and track attendance with clear roles, accurate reporting, and minimal manual effort.",
+    features: [
+      "JWT authentication with role- and permission-based access control for Admin, Teacher, and Student roles",
+      "37 REST API endpoints across users, classes, sessions, attendance, dashboards, and reports",
+      "Session-based attendance recording with present, absent, and late tracking",
+      "Role-specific dashboards with attendance analytics filterable by class, student, session, and date range",
+      "Interactive Swagger/OpenAPI documentation deployed separately on Netlify",
+      "Deployed on Render (backend), Vercel (frontend), and Neon PostgreSQL (database)",
+    ],
+    image: "/projects/attendance-management.svg",
+    technologies: [
+      "React",
+      "Vite",
+      "Redux Toolkit",
+      "React Query",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Sequelize",
+      "JWT",
+      "Tailwind CSS",
+    ],
+    githubUrl: "https://github.com/Jatin-GI/attendance",
+    liveUrl: "https://attendance-7q71.vercel.app",
+    category: "Full Stack",
+  },
+  {
     id: "store-management-system",
     name: "Store Management System",
     description:

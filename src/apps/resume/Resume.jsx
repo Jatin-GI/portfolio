@@ -2,7 +2,7 @@
 
 import { Download, ExternalLink, FileText } from "lucide-react";
 
-const RESUME_PATH = "/resume.pdf";
+const RESUME_PATH = "/Jatin Resume-WEB (7).pdf";
 const RESUME_FILENAME = "Jatin_Gupta_Resume.pdf";
 
 export default function Resume() {
@@ -10,7 +10,9 @@ export default function Resume() {
     <div className="flex h-full min-h-[360px] flex-col">
       <div className="flex flex-wrap items-center gap-2 border-b border-white/10 px-4 py-3">
         <FileText className="h-4 w-4 text-sky-300" />
-        <span className="mr-auto truncate text-sm text-zinc-300">{RESUME_FILENAME}</span>
+        <span className="mr-auto truncate text-sm text-zinc-300">
+          {RESUME_FILENAME}
+        </span>
         <a
           href={RESUME_PATH}
           download={RESUME_FILENAME}

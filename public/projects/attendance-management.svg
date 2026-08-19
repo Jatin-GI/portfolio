@@ -1,0 +1,19 @@
+<svg viewBox="0 0 838 524" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="838" height="524" fill="#161a23"/>
+
+  <rect x="38" y="70" width="738" height="416" rx="10" fill="#0d1420"/>
+
+  <rect x="76" y="107" width="662" height="342" rx="14" fill="#161c2e"/>
+
+  <circle cx="107" cy="138" r="6" fill="#ef4444"/>
+  <circle cx="129" cy="138" r="6" fill="#eab308"/>
+  <circle cx="151" cy="138" r="6" fill="#22c55e"/>
+
+  <text x="115" y="182" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#60a5fa">Attendance Management</text>
+
+  <rect x="115" y="207" width="599" height="10" rx="5" fill="#3b6fb0"/>
+  <rect x="115" y="235" width="449" height="10" rx="5" fill="#3a4258"/>
+  <rect x="115" y="263" width="399" height="10" rx="5" fill="#3a4258"/>
+
+  <text x="115" y="332" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#9aa3b5">React &#183; Express &#183; PostgreSQL &#183; JWT</text>
+</svg>

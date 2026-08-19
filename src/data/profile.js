@@ -1,10 +1,11 @@
 const profile = {
   name: "Jatin Gupta",
   title: "Full-Stack Developer",
-  tagline: "React · Node.js · TypeScript",
+  tagline: "React · Node.js · Next.js",
   education:
     "B.Tech in Computer Science — Guru Gobind Singh Indraprastha University (GGSIPU)",
-  educationDetails: "Currently in 7th semester | CGPA: 8.77 | Aug 2023 – Sep 2027",
+  educationDetails:
+    "Currently in 7th semester | CGPA: 8.77 | Aug 2023 – Sep 2027",
   location: "Delhi, India",
   phone: "+91 7669319031",
   currentFocus:
