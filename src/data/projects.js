@@ -1,5 +1,37 @@
 const projects = [
   {
+    id: "url-shortener",
+    name: "URL Shortener",
+    description:
+      "Full-stack URL shortener that turns long links into short codes, redirects visitors, and tracks clicks — with Redis caching, rate limiting, and a Dockerized backend.",
+    problem:
+      "Long URLs are hard to share and track. Redirects must be fast under load and protected from abuse, while click analytics stay accurate.",
+    features: [
+      "REST API to create, list, fetch, and delete short links with per-link click counts",
+      "Redis cache for redirect lookups (24h TTL) so repeat redirects skip the database",
+      "Redis-backed rate limiting: 10 creates and 100 redirects per minute per IP",
+      "Click counts persisted in PostgreSQL via Sequelize; cache invalidated on delete",
+      "API, PostgreSQL, and Redis orchestrated locally with Docker Compose",
+      "Deployed with Neon (PostgreSQL), Upstash (Redis), Render (API), and Vercel (UI)",
+    ],
+    image: "/projects/url-shortener.png",
+    technologies: [
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Sequelize",
+      "Redis",
+      "Docker",
+      "Docker Compose",
+      "React",
+      "Vite",
+      "Tailwind CSS",
+    ],
+    githubUrl: "https://github.com/Jatin-GI/url-shortner",
+    liveUrl: "https://url-shortner-gamma-eight.vercel.app",
+    category: "Full Stack",
+  },
+  {
     id: "attendance-management-system",
     name: "Attendance Management System",
     description:

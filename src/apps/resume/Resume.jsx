@@ -2,7 +2,7 @@
 
 import { Download, ExternalLink, FileText } from "lucide-react";
 
-const RESUME_PATH = "/Jatin Resume-WEB (7).pdf";
+const RESUME_PATH = "/Jatin_Gupta_Backend_Resume.pdf";
 const RESUME_FILENAME = "Jatin_Gupta_Resume.pdf";
 
 export default function Resume() {
