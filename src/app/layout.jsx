@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -61,6 +62,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full overflow-hidden bg-[#05070d] font-sans text-zinc-100 overscroll-none">
         {children}
+        <Analytics />
       </body>
     </html>
   );
